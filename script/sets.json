@@ -1,0 +1,70 @@
+[
+    {
+        "name": "Shards of Alara",
+        "acronym": "ALA"
+    },
+    {
+        "name": "Double Masters",
+        "acronym": "2XM"
+    },
+    {
+        "name": "Modern Masters",
+        "acronym": "MMA"
+    },
+    {
+        "name": "Modern Masters 2015",
+        "acronym": "MM2"
+    },
+    {
+        "name": "Future Sight",
+        "acronym": "FUT"
+    },
+    {
+        "name": "Ultimate Masters",
+        "acronym": "UMA"
+    },
+    {
+        "name": "Ninth Edition",
+        "acronym": "9ED"
+    },
+    {
+        "name": "Seventh Edition",
+        "acronym": "7ED"
+    },
+    {
+        "name": "Shadowmoor",
+        "acronym": "SHM"
+    },
+    {
+        "name": "Guildpact",
+        "acronym": "GPT"
+    },
+    {
+        "name": "Magic 2012",
+        "acronym": "M12"
+    },
+    {
+        "name": "Magic 2010",
+        "acronym": "M10"
+    },
+    {
+        "name": "Dominaria",
+        "acronym": "DOM"
+    },
+    {
+        "name": "Throne of Eldraine",
+        "acronym": "ELD"
+    },
+    {
+        "name": "Khans of Tarkir",
+        "acronym": "KTK"
+    },
+    {
+        "name": "Limited Edition Alpha",
+        "acronym": "LEA"
+    },
+    {
+        "name": "Scourge",
+        "acronym": "SCG"
+    }
+]
