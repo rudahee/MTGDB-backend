@@ -66,5 +66,9 @@
     {
         "name": "Scourge",
         "acronym": "SCG"
+    },
+    {
+        "name": "Ikoria: Lair of Behemoths",
+        "acronym": "IKO"
     }
 ]
