@@ -3,6 +3,7 @@ package com.mtgdb.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,80 +12,144 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mtgdb.Entity.Card;
-import com.mtgdb.Entity.Set;
-import com.mtgdb.Respository.CardRepository;
-import com.mtgdb.Respository.SetRepository;
+import com.mtgdb.Model.Entity.Card;
+import com.mtgdb.Model.Entity.Format;
+import com.mtgdb.Model.Entity.Set;
+import com.mtgdb.Service.CardService;
+import com.mtgdb.Service.SetService;
 
 @RestController
 @RequestMapping(path = "/mtgdb")
 public class CardController {
 
 	@Autowired
-	private CardRepository cardRepository;
-	@Autowired
-	private SetRepository setRepository;
+	private SetService setService;
 	
-	
+	@Autowired CardService cardService;
+		
 	@GetMapping("/card")
-	public ResponseEntity<?> getCards() {
-		return ResponseEntity.ok(cardRepository.findAll());
+	public ResponseEntity<?> getCards() {	
+		List<Card> cards = cardService.getAllCards();
+		HttpStatus status = cardService.getStatus();
+		
+		return ResponseEntity.status(status).body(cards);
+	}
+	
+	@GetMapping("/formatsavailableforcard/{cardId}")
+	public ResponseEntity<?> getCardsInFormat(@PathVariable Integer cardId) {
+		List<String> cards = cardService.FormatsAvailableForCard(cardId);
+		HttpStatus status = cardService.getStatus();
+		
+		return ResponseEntity.status(status).body(cards);
+	}
+	
+	@GetMapping("/all-card-string")
+	public ResponseEntity<?> getAllCardsContainsStringInName(@RequestParam String string) {
+		List<Card> cards = cardService.getCardsContaisStringInName(string);
+		HttpStatus status = cardService.getStatus();
+		
+		return ResponseEntity.status(status).body(cards);
+	}
+	@GetMapping("/all-card-name/{name}")
+	public ResponseEntity<?> getCardByName(@PathVariable String name) {
+		Card card = cardService.getCardByName(name);
+		HttpStatus status = cardService.getStatus();
+		
+		return ResponseEntity.status(status).body(card);
 	}
 	
 	@GetMapping("/card/{cardId}")
 	public ResponseEntity<?> getCards(@PathVariable Integer cardId) {
-		return ResponseEntity.ok(cardRepository.findById(cardId));
-	}
-	
-	@DeleteMapping("/card/{cardId}")
-	public void deleteCards(@PathVariable Integer cardId) {
-		cardRepository.deleteById(cardId);
+		Card card = cardService.getCardById(cardId);
+		HttpStatus status = cardService.getStatus();
+		
+		return ResponseEntity.status(status).body(card);
 	}
 	
 	@PostMapping("/card")
-	public Card addCard(@RequestBody Card card) {
-		return cardRepository.save(card);
+	public ResponseEntity<?> addCard(@RequestBody Card card) {
+		String body = cardService.addCard(card);
+		HttpStatus status = cardService.getStatus();
+		
+		return ResponseEntity.status(status).body(body);
 	}
 	
 	@PostMapping("/cards")
-	public Iterable<Card> addAllCards(@RequestBody List<Card> cards) {
-		return cardRepository.saveAll(cards);
+	public ResponseEntity<?> addAllCards(@RequestBody List<Card> cards) {
+		String body = cardService.addListCard(cards);
+		HttpStatus status = cardService.getStatus();
+		
+		return ResponseEntity.status(status).body(body);
 	}
-	
+
 	@PutMapping("/card/{id}")
 	public ResponseEntity<?> updateCard(@PathVariable Integer id, @RequestBody Card newCard) {
-		cardRepository.findById(id).get().setName(newCard.getName());
-		cardRepository.findById(id).get().setImage(newCard.getImage());
-		cardRepository.findById(id).get().setQuote(newCard.getQuote());
-		cardRepository.save(cardRepository.findById(id).get());
-		return ResponseEntity.ok(cardRepository.findById(id).get());
+		String body = cardService.updateCard(id, newCard);
+		HttpStatus status = cardService.getStatus();
+		
+		return ResponseEntity.status(status).body(body);
 	}
 	
 	
 	@PutMapping("/cards/{cardId}")
-	public void addCardsToSets(@PathVariable Integer cardId, @RequestBody List<String> setsId) {
-
-		Card c = cardRepository.findById(cardId).get();
-		for (String setId: setsId) {
-			c.addSet(setRepository.findById(setId).get());
-			cardRepository.save(c);
-		}
+	public ResponseEntity<?> addCardsToSets(@PathVariable Integer cardId, @RequestBody List<String> setsId) {
+		String body = cardService.addCardsToSets(cardId, setsId);
+		HttpStatus status = cardService.getStatus();
+		
+		return ResponseEntity.status(status).body(body);
+		
 	}
 	
-	@PostMapping("/set")
-	public Set addSet(@RequestBody Set set) {
-		return setRepository.save(set);
+	@DeleteMapping("/card/{cardId}")
+	public ResponseEntity<?> deleteCards(@PathVariable Integer cardId) {
+		String body = cardService.deleteCard(cardId);
+		HttpStatus status = cardService.getStatus();
+		
+		return ResponseEntity.status(status).body(body);
 	}
-
-	@PostMapping("/sets")
-	public Iterable<Set> addAllSets(@RequestBody List<Set> sets) {
-		return setRepository.saveAll(sets);
-	}
+	
 	
 	@GetMapping("/set")
 	public ResponseEntity<?> getSets() {
-		return ResponseEntity.ok(setRepository.findAll());
+		List<Set> sets = setService.getAllsets();
+		HttpStatus status = setService.getStatus();
+		
+		return ResponseEntity.status(status).body(sets);	
 	}
+	
+	@PostMapping("/set")
+	public ResponseEntity<?> addSet(@RequestBody Set set) {
+		String body = setService.addSet(set);
+		HttpStatus status = setService.getStatus();
+		
+		return ResponseEntity.status(status).body(body);
+	}
+
+	@PostMapping("/sets")
+	public ResponseEntity<?> addAllSets(@RequestBody List<Set> sets) {
+		String body = setService.addListSet(sets);
+		HttpStatus status = setService.getStatus();
+		
+		return ResponseEntity.status(status).body(body);
+	}
+
+	@PutMapping("/set/{id}")
+	public ResponseEntity<?> updateSet(@PathVariable String id, @RequestBody Set newSet) {
+		String body = setService.updateSet(id, newSet);
+		HttpStatus status = setService.getStatus();
+		
+		return ResponseEntity.status(status).body(body);
+	}
+	
+	@DeleteMapping("/set/{setId}")
+	public ResponseEntity<?> deleteCards(@PathVariable String setId) {
+		String body = setService.deleteSet(setId);
+		HttpStatus status = setService.getStatus();
+		
+		return ResponseEntity.status(status).body(body);
+	}
+	
 }

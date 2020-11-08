@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mtgdb.Entity.Format;
-import com.mtgdb.Respository.FormatRepository;
-import com.mtgdb.Respository.SetRepository;
+import com.mtgdb.Model.Entity.Format;
+import com.mtgdb.Model.Respository.FormatRepository;
+import com.mtgdb.Model.Respository.SetRepository;
 
 @RestController
 @RequestMapping(path = "/mtgdb")

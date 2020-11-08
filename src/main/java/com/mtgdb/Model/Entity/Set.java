@@ -1,4 +1,4 @@
-package com.mtgdb.Entity;
+package com.mtgdb.Model.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
