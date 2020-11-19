@@ -23,4 +23,13 @@ public class FileHandlerServiceImpl {
 		}
 		return blob;
 	}
+	public byte[] createInputStream(Blob blob) {
+		try {
+			byte[] bytes = blob.getBinaryStream().readAllBytes();
+            return bytes;
+		} catch (SQLException | IOException e) {
+			System.out.println("Tengo que hacer el Logger!!");
+			return null;
+		}
+	}
 }

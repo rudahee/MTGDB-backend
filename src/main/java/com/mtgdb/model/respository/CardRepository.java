@@ -7,7 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.mtgdb.model.entity.Card;
-import com.mtgdb.model.entity.Format;
 
 @Repository(value = "cardRepository")
 public interface CardRepository extends CrudRepository<Card, Integer>{
