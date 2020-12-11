@@ -1,5 +1,7 @@
 package com.mtgdb.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,16 +25,29 @@ public class CardController {
 	private PersistenceServiceImpl<Card, Integer> persistenceService;
 	
 	
-	@GetMapping("/card/{cardId}")
-	public ResponseEntity<?> getCards(@PathVariable Integer cardId) {
-		Card card = persistenceService.getEntityById(cardId);
+	@GetMapping("/card/{id}")
+	public ResponseEntity<?> getCard(@PathVariable Integer id) {
+		Card card = persistenceService.getEntityById(id);
 		HttpStatus status = HttpStatus.OK;
 		return ResponseEntity.status(status).body(card);
+	}
+	@GetMapping("/cards")
+	public ResponseEntity<?> getCards() {
+		List<Card> cards = persistenceService.getAllEntities();
+		HttpStatus status = HttpStatus.OK;
+		return ResponseEntity.status(status).body(cards);
 	}
 	
 	@PostMapping("/card")
 	public ResponseEntity<?> addCard(@RequestBody Card card) {
 		String body = persistenceService.addEntity(card);
+		HttpStatus status = HttpStatus.OK;
+		return ResponseEntity.status(status).body(body);
+	}
+	
+	@PostMapping("/cards")
+	public ResponseEntity<?> addCards(@RequestBody List<Card> cards) {
+		String body = persistenceService.addEntities(cards);
 		HttpStatus status = HttpStatus.OK;
 		return ResponseEntity.status(status).body(body);
 	}
@@ -45,13 +60,13 @@ public class CardController {
 	}
 	
 	
-	@DeleteMapping("/card/{cardId}")
-	public ResponseEntity<?> deleteCards(@PathVariable Integer cardId) {
-		String body = persistenceService.deleteEntity(cardId);
+	@DeleteMapping("/card/{id}")
+	public ResponseEntity<?> deleteCards(@PathVariable Integer id) {
+		String body = persistenceService.deleteEntity(id);
 		HttpStatus status = HttpStatus.OK;		
 		return ResponseEntity.status(status).body(body);
 	}
-	
+
 	/*
 	 * 
 	 * 

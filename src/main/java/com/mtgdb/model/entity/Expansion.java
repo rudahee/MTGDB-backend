@@ -7,6 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Proxy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -14,8 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Expansion implements Comparable<Expansion> {
 	
 	@Id
-	@Column(length = 3)
-	private String acronym;
+	private String id;
 	
 	@Column(nullable = false)
 	private String name;
@@ -28,10 +30,10 @@ public class Expansion implements Comparable<Expansion> {
 	@JsonIgnore
 	private List<Format> formats;
 	
-	public Expansion(String name, String acronym) {
+	public Expansion(String name, String id) {
 		super();
 		this.name = name;
-		this.acronym = acronym;
+		this.id = id;
 		this.cards = new ArrayList<Card>();
 		this.formats = new ArrayList<Format>();
 	}
@@ -50,12 +52,12 @@ public class Expansion implements Comparable<Expansion> {
 		this.name = name;
 	}
 
-	public String getAcronym() {
-		return acronym;
+	public String getId() {
+		return id;
 	}
 
-	public void setAcronym(String acronym) {
-		this.acronym = acronym;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 
@@ -83,7 +85,7 @@ public class Expansion implements Comparable<Expansion> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((acronym == null) ? 0 : acronym.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -97,10 +99,10 @@ public class Expansion implements Comparable<Expansion> {
 		if (getClass() != obj.getClass())
 			return false;
 		Expansion other = (Expansion) obj;
-		if (acronym == null) {
-			if (other.acronym != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!acronym.equals(other.acronym))
+		} else if (!id.equals(other.id))
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -112,12 +114,12 @@ public class Expansion implements Comparable<Expansion> {
 	
 	@Override
 	public String toString() {
-		return "Set [acronym=" + acronym + ", name=" + name + ", cards=" + cards + ", formats=" + formats + "]";
+		return "Set [acronym=" + id + ", name=" + name + ", cards=" + cards + ", formats=" + formats + "]";
 	}
 
 	@Override
 	public int compareTo(Expansion o) {
-		 if (this.acronym.equals(o.getAcronym())) {
+		 if (this.id.equals(o.getId())) {
 			return 1;
 		} else {
 			return -1;

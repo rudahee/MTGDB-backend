@@ -30,7 +30,7 @@ public class Card implements Comparable<Card> {
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "card_expansion",
 		joinColumns = @JoinColumn(name="card_id", referencedColumnName="id"),
-		inverseJoinColumns = @JoinColumn(name="expansion_id", referencedColumnName="acronym"))
+		inverseJoinColumns = @JoinColumn(name="expansion_id", referencedColumnName="id"))
 	@JsonIgnore
 	private List<Expansion> expansions;
 

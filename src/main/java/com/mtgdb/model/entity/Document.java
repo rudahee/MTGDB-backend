@@ -16,9 +16,9 @@ public class Document {
 	
 	private Blob image;
 	
-	private String fileName;
+	private String name;
 	
-	private Integer fileSize;
+	private Integer size;
 	
 	public Document() {
 		super();
@@ -26,8 +26,8 @@ public class Document {
 	
 	public Document(Blob image, String name, Integer size) {
 		this.image = image;
-		this.fileName = name;
-		this.fileSize = size;
+		this.name = name;
+		this.size = size;
 	}
 
 	public Long getId() {
@@ -47,19 +47,19 @@ public class Document {
 	}
 
 	public String getFileName() {
-		return fileName;
+		return name;
 	}
 
 	public void setFileName(String fileName) {
-		this.fileName = fileName;
+		this.name = fileName;
 	}
 
 	public Integer getFileSize() {
-		return fileSize;
+		return size;
 	}
 
 	public void setFileSize(Integer fileSize) {
-		this.fileSize = fileSize;
+		this.size = fileSize;
 	}
 	
 }

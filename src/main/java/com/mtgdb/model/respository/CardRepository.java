@@ -2,12 +2,14 @@ package com.mtgdb.model.respository;
 
 import java.util.List;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.mtgdb.model.entity.Card;
 
+@Primary
 @Repository(value = "cardRepository")
 public interface CardRepository extends CrudRepository<Card, Integer>{
 	
@@ -23,6 +25,5 @@ public interface CardRepository extends CrudRepository<Card, Integer>{
 	@Query(value = "select * from card c where c.name LIKE %?1%", nativeQuery=true)
 	public List<Card> getAllCardsContainsStringInName(String name);
 	
-	public Card getCardByName(String name);
 	
 }

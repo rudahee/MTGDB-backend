@@ -27,7 +27,7 @@ public class Format implements Comparable<Format> {
 	@ManyToMany
 	@JoinTable(name = "format_expansion",
 	joinColumns = @JoinColumn(name="format_id", referencedColumnName="id"),
-	inverseJoinColumns = @JoinColumn(name="expansion_id", referencedColumnName="acronym"))
+	inverseJoinColumns = @JoinColumn(name="expansion_id", referencedColumnName="id"))
 	@JsonIgnore
 	private List<Expansion> expansions;
 

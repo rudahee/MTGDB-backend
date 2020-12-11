@@ -1,5 +1,7 @@
 package com.mtgdb.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,15 +27,28 @@ public class ExpansionController {
 	
 	
 	@GetMapping("/expansion/{id}")
-	public ResponseEntity<?> getExpansion(@PathVariable String cardId) {
-		Expansion expansion = persistenceService.getEntityById(cardId);
+	public ResponseEntity<?> getExpansion(@PathVariable String id) {
+		Expansion expansion = persistenceService.getEntityById(id);
 		HttpStatus status = HttpStatus.OK;
 		return ResponseEntity.status(status).body(expansion);
+	}
+	@GetMapping("/expansions")
+	public ResponseEntity<?> getAllExpansions() {
+		List<Expansion> expansions = persistenceService.getAllEntities();
+		HttpStatus status = HttpStatus.OK;
+		return ResponseEntity.status(status).body(expansions);
 	}
 	
 	@PostMapping("/expansion")
 	public ResponseEntity<?> addExpansion(@RequestBody Expansion expansion) {
-		String body = persistenceService.addEntity(expansion);
+		String body = persistenceService.addExpansion(expansion);
+		HttpStatus status = HttpStatus.OK;
+		return ResponseEntity.status(status).body(body);
+	}
+	
+	@PostMapping("/expansions")
+	public ResponseEntity<?> addExpansions(@RequestBody List<Expansion> expansions) {
+		String body = persistenceService.addEntities(expansions);
 		HttpStatus status = HttpStatus.OK;
 		return ResponseEntity.status(status).body(body);
 	}

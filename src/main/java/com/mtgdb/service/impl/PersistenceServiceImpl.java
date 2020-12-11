@@ -1,36 +1,42 @@
 package com.mtgdb.service.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.mtgdb.model.entity.Card;
+import com.mtgdb.model.entity.Expansion;
 import com.mtgdb.service.ICrudService;
 
+
 @Service
-public class PersistenceServiceImpl<T, S> implements ICrudService<T, S>{
+public class PersistenceServiceImpl<T, ID> implements ICrudService<T, ID>{
 	
 	private HttpStatus status = null;
+
+	@Autowired
+	private CrudRepository<T, ID> repository;
 	
 	@Autowired
-	private  Map<String, CrudRepository<T, S>> repositories;
+	private ValidationServiceImpl<T, ID> validService;
+	
 
-	private CrudRepository<T, S> repository;
-	private T entity;
-	
-	
+	public HttpStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(HttpStatus status) {
+		this.status = status;
+	}
+
 	public List<T> getAllEntities() {
-		repository = repositories.get(determineClass(entity));
 		return repository.count() == 0 ? null: (List<T>) repository.findAll();
 	}
 	
 	@Override
-	public T getEntityById(S id) {
-		repository = repositories.get(determineClass(entity));
+	public T getEntityById(ID id) {
 		T response = null;
 		
 		if (repository.existsById(id)) {
@@ -44,7 +50,6 @@ public class PersistenceServiceImpl<T, S> implements ICrudService<T, S>{
 
 	@Override
 	public String addEntity(T entity) {
-		repository = repositories.get(determineClass(entity));
 		String response = "Se ha producido un error al crear la entidad";
 		
 		try {
@@ -58,35 +63,49 @@ public class PersistenceServiceImpl<T, S> implements ICrudService<T, S>{
 	}
 
 	@Override
-	public String updateEntity(S id, T entity) {
-		repository = repositories.get(determineClass(entity));
+	public String addEntities(List<T> entities) {
+		String response = "Se ha producido un error al crear las entidades";
+		repository.saveAll(entities);
 
+		try {
+			status = HttpStatus.CREATED;
+			response = "Se han agregado las entidades";
+		} catch (Exception e) {
+			status = HttpStatus.CONFLICT;
+		}
+		return response;
+	}
+	
+	@Override
+	public String updateEntity(ID id, T entity) {
 		repository.delete(repository.findById(id).get());
 		repository.save(entity);
 		return "Se modifico una entidad";
 	}
 
 	@Override
-	public String deleteEntity(S id) {
-		repository = repositories.get(determineClass(entity));
-
-		
+	public String deleteEntity(ID id) {		
 		repository.delete(repository.findById(id).get());
 
 		return "Se borro una entidad";
 		
 	}
-
 	
-	private String determineClass(T entity) {
-		return entity.getClass().getSimpleName() + "Repository";
+	public String addExpansion(T entity) {
+		String response = "Se ha producido un error al crear la entidad";
+		
+		
+		response = validService.validateAcronym((Expansion) entity);
+		
+		if (validService.isValid()) {
+			repository.save(entity);
+			status = HttpStatus.CREATED;
+			response = "Se ha agregado una entidad";
+		} else {
+			status = HttpStatus.CONFLICT;
+		}
+		return response;
 	}
 	
-	public HttpStatus getStatus() {
-		return status;
-	}
 
-	public void setStatus(HttpStatus status) {
-		this.status = status;
-	}
 }

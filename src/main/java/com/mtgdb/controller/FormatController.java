@@ -1,5 +1,7 @@
 package com.mtgdb.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +27,8 @@ public class FormatController {
 	
 	
 	@GetMapping("/format/{id}")
-	public ResponseEntity<?> getFormat(@PathVariable Integer cardId) {
-		Format format = persistenceService.getEntityById(cardId);
+	public ResponseEntity<?> getFormat(@PathVariable Integer id) {
+		Format format = persistenceService.getEntityById(id);
 		HttpStatus status = HttpStatus.OK;
 		return ResponseEntity.status(status).body(format);
 	}
@@ -34,6 +36,12 @@ public class FormatController {
 	@PostMapping("/format")
 	public ResponseEntity<?> addFormat(@RequestBody Format format) {
 		String body = persistenceService.addEntity(format);
+		HttpStatus status = HttpStatus.OK;
+		return ResponseEntity.status(status).body(body);
+	}
+	@PostMapping("/formats")
+	public ResponseEntity<?> addFormats(@RequestBody List<Format> formats) {
+		String body = persistenceService.addEntities(formats);
 		HttpStatus status = HttpStatus.OK;
 		return ResponseEntity.status(status).body(body);
 	}
