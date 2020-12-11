@@ -42,7 +42,7 @@ public class CardController {
 	public ResponseEntity<?> addCard(@RequestBody Card card) {
 		String body = persistenceService.addEntity(card);
 		HttpStatus status = HttpStatus.OK;
-		return ResponseEntity.status(status).body(body);
+		return ResponseEntity.status(status).body(card);
 	}
 	
 	@PostMapping("/cards")

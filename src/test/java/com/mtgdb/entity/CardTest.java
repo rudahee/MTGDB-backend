@@ -1,9 +1,11 @@
 package com.mtgdb.entity;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -20,8 +22,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.mtgdb.controller.CardController;
 import com.mtgdb.model.entity.Card;
 import com.mtgdb.model.respository.CardRepository;
-import com.mtgdb.service.IService;
-import java.util.stream.Stream;
+import com.mtgdb.service.impl.PersistenceServiceImpl;
+
+import javassist.NotFoundException;
 
 @WebMvcTest(CardController.class)
 public class CardTest {
@@ -32,7 +35,7 @@ public class CardTest {
 	private CardRepository cardRepo;
 
 	@MockBean
-	private IService service; 
+	private PersistenceServiceImpl<Card, String> service; 
 	
 	private final static String ROOT_PATH = "/customer";
 	
@@ -49,6 +52,16 @@ public class CardTest {
 					);
 	}
 	
+	@Test
+	public void gerCard() throws Exception {
+		Mockito.when(service.getEntityById(Mockito.anyString()))
+				.thenThrow(new NotFoundException("No existe la carta"))
+				.thenReturn(new Card());
+		
+		mockMVC.perform(get(ROOT_PATH+"/3")).andExpect(status().isNotFound());
+		mockMVC.perform(get(ROOT_PATH+"/3")).andExpect(status().isOk());
+	}
+	
 	@ParameterizedTest
 	@MethodSource("postDataProvider")
 	public void postNewCard(Integer id, ResultMatcher expectedResult) throws Exception {
@@ -60,7 +73,7 @@ public class CardTest {
 		mockMVC.perform(MockMvcRequestBuilders.post(ROOT_PATH)
 				.accept(MediaType.APPLICATION_JSON_VALUE)
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
-				.content(""))
+				.content("{\"name\":\"name\", \"image\":\"image.jpeg\"}"))
 			.andExpect(expectedResult);
 		
 	}

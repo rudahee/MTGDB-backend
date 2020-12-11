@@ -1,74 +1,74 @@
 [
     {
         "name": "Shards of Alara",
-        "acronym": "ALA"
+        "id": "ALA"
     },
     {
         "name": "Double Masters",
-        "acronym": "2XM"
+        "id": "2XM"
     },
     {
         "name": "Modern Masters",
-        "acronym": "MMA"
+        "id": "MMA"
     },
     {
         "name": "Modern Masters 2015",
-        "acronym": "MM2"
+        "id": "MM2"
     },
     {
         "name": "Future Sight",
-        "acronym": "FUT"
+        "id": "FUT"
     },
     {
         "name": "Ultimate Masters",
-        "acronym": "UMA"
+        "id": "UMA"
     },
     {
         "name": "Ninth Edition",
-        "acronym": "9ED"
+        "id": "9ED"
     },
     {
         "name": "Seventh Edition",
-        "acronym": "7ED"
+        "id": "7ED"
     },
     {
-        "name": "Shadowmoor",
-        "acronym": "SHM"
+       "name": "Shadowmoor",
+       "id": "SHM"
     },
     {
-        "name": "Guildpact",
-        "acronym": "GPT"
+       "name": "Guildpact",
+       "id": "GPT"
     },
     {
-        "name": "Magic 2012",
-        "acronym": "M12"
+       "name": "Magic 2012",
+       "id": "M12"
     },
     {
-        "name": "Magic 2010",
-        "acronym": "M10"
+       "name": "Magic 2010",
+       "id": "M10"
     },
     {
-        "name": "Dominaria",
-        "acronym": "DOM"
+       "name": "Dominaria",
+       "id": "DOM"
     },
     {
-        "name": "Throne of Eldraine",
-        "acronym": "ELD"
+       "name": "Throne of Eldraine",
+       "id": "ELD"
     },
     {
-        "name": "Khans of Tarkir",
-        "acronym": "KTK"
+      "name": "Khans of Tarkir",
+      "id": "KTK"
     },
     {
-        "name": "Limited Edition Alpha",
-        "acronym": "LEA"
+       "name": "Limited Edition Alpha",
+       "id": "LEA"
     },
     {
-        "name": "Scourge",
-        "acronym": "SCG"
+       "name": "Scourge",
+       "id": "SCG"
     },
     {
-        "name": "Ikoria: Lair of Behemoths",
-        "acronym": "IKO"
+       "name": "Ikoria: Lair of Behemoths",
+       "id": "IKO"
     }
 ]

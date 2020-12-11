@@ -10,7 +10,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import com.mtgdb.model.entity.Card;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class CustomerCardControllerTest {
+public class CardControllerTest {
 
 	 @LocalServerPort
 	 private int port;
@@ -37,7 +37,7 @@ public class CustomerCardControllerTest {
 		card.setImage("image"); 
 		card.setQuote("quote");
 		 
-		id = template.postForObject(getURL(), card, Integer.class);
+		id = template.postForObject(getURL(), card, Card.class).getId();
 		 
 		assert(template.getForEntity(getURL()+"/"+id, Card.class).getClass() != null);
 	 }
