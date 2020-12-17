@@ -24,7 +24,6 @@ public class CardController {
 	@Autowired
 	private PersistenceServiceImpl<Card, Integer> persistenceService;
 	
-	
 	@GetMapping("/card/{id}")
 	public ResponseEntity<?> getCard(@PathVariable Integer id) {
 		Card card = persistenceService.getEntityById(id);
@@ -66,14 +65,4 @@ public class CardController {
 		HttpStatus status = HttpStatus.OK;		
 		return ResponseEntity.status(status).body(body);
 	}
-
-	/*
-	 * 
-	 * 
-	 * 
-	 *  RECUERDA MODIFICAR LOS HTTP STATUS!!
-	 * 
-	 * 
-	 */
-
 }
