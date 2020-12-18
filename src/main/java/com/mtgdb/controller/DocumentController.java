@@ -29,13 +29,13 @@ public class DocumentController {
 	@Autowired
 	private FileHandlerServiceImpl fileService;
 	
-	@PutMapping("/doc")
+	@PutMapping("")
 	public ResponseEntity<?> uploadPicture(@RequestParam(name = "pic", required = false) MultipartFile pic){
 		
 		service.addDocument(pic);
 		return ResponseEntity.ok("File "+ pic.getOriginalFilename()+ " successfully uploaded");
 	}
-	@GetMapping("/doc/{id}")
+	@GetMapping("{id}")
 	public ResponseEntity<?> downloadPicture(@PathVariable Long id){
 		HttpHeaders headers = new HttpHeaders();
 		Document pic = service.getDocument(id);
